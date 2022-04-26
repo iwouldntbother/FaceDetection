@@ -1,0 +1,60 @@
+html, body {
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  width: 100vw;
+  height: 100vh;
+  font-family: monospace;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+#siteContainer {
+  display: flex;
+  flex-direction: row;
+  /* justify-content: center; */
+  align-items: center;
+  height: 100vh;
+  width: 100vw;
+}
+
+#informationContainer {
+  display: flex;
+  flex-direction: column;
+  padding-left: 0.5vw;
+  width: 20vw;
+  height: 100vh;
+}
+
+#informationContainer h1 {
+  font-size: 3vw;
+  margin-top: 0.5vw;
+  margin-bottom: 0.75vw;
+}
+
+#informationContainer p {
+  font-size: 0.95vw;
+}
+
+#videoContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 80vw;
+  height: 100vh;
+  /* height: 90vh; */
+}
+
+#videoTest {
+  max-width: 80vw;
+  /* max-height: 90vh; */
+  height: auto;
+}
+
+#canvasTest {
+  position: absolute;
+  max-width: 80vw;
+  height: auto;
+}
