@@ -11,6 +11,16 @@
 
   <div id='siteContainer'>
 
+    <div id='startScreen'>
+      <h1>Start Screen</h1>
+      <p>Press space or click button bellow to start</p>
+      <button id='startBTN'>Start</button>
+    </div>
+
+    <div id='videoHolder'>
+      <video id='video' src='video/testVideo.mp4'></video>
+    </div>
+
     <div id='quizContainer'>
       <p id='quizTitle' class='quizTitle'>Test question?<br><span>(Answer is 3)</span></p>
       <button id='answer0' class='quizOption'>0. Test</button>
@@ -20,8 +30,15 @@
       <button id='nextBTN'>Check</button>
     </div>
 
+    <div id="videoContainer" style='display: none;'>
+      <video id="videoTest"></video>
+      <canvas id="canvasTest"></canvas>
+    </div>
+
   </div>
 
+  <script src="/js/jquery-3.4.1.min.js"></script>
+  <script src='/js/face-api.js'></script>
   <script src='js/quizQuestions.js'></script>
   <script src='js/quiz.js'></script>
 

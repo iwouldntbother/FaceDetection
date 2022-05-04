@@ -45,3 +45,61 @@ body {
 .wrong {
   background-color: #e74c3c !important;
 }
+
+/* Face Detection */
+
+#videoContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 80vw;
+  height: 100vh;
+  /* height: 90vh; */
+}
+
+#videoTest {
+  max-width: 80vw;
+  /* max-height: 90vh; */
+  height: auto;
+}
+
+#canvasTest {
+  position: absolute;
+  max-width: 80vw;
+  height: auto;
+}
+
+/* Video */
+
+#videoHolder {
+  width: 100vw;
+  height: 100vh;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: black;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#video {
+  max-width: 100vw;
+  max-height: 100vh;
+}
+
+/* Start Screen */
+
+#startScreen {
+  width: 100vw;
+  height: 100vh;
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 10;
+  background: black;
+  color: white;
+}
