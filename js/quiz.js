@@ -23,6 +23,8 @@ var streamObj = null;
 const updateInt = 500
 var detectLoop;
 var logging = false;
+var faceCapture = false;
+var extractedFace;
 
 const drawResults = false;
 
@@ -67,6 +69,34 @@ function startup() {
   }, false);
 
 }  
+
+// Extract face
+
+async function extractFaceFromBox(imageRef, box) {
+  let imageEl = null;
+  const regionsToExtract = [
+    new faceapi.Rect(box.x, box.y*0.5, box.width*2, box.height*2)
+  ];
+  let faceImages = await faceapi.extractFaces(imageRef, regionsToExtract);
+
+  if (faceImages.length === 0) {
+    // console.log("No face found");
+  } else {
+    let outputImage = "";
+    faceImages.forEach((cnv) => {
+      outputImage = cnv.toDataURL();
+      // setPic(cnv.toDataURL());
+    });
+    // setPic(faceImages.toDataUrl);
+    // console.log("face found ");
+    // console.log(outputImage);
+    imageEl = document.createElement('img')
+    imageEl.src = outputImage;
+    // document.getElementById('facesOutput').appendChild(imageEl);
+    // document.getElementById('outputCropped').src = outputImage;
+  }
+  return imageEl;
+}
 
 // End Webcam Stream
 
@@ -146,6 +176,14 @@ async function faceDect(){
         faceData.sad.push(largestFace.expressions.sad);
         faceData.surprised.push(largestFace.expressions.surprised);
         faceData.age.push(largestFace.age);
+
+        if (faceCapture) {
+          faceCapture = false;
+          let largestFullBox = Math.max(...fullFaceDescriptions.map(x => x.alignedRect.box.area));
+          let largestFullFace = fullFaceDescriptions.find(o => o.alignedRect.box.area == largestFullBox);
+          console.log(largestFullFace);
+          extractedFace = await extractFaceFromBox(input, largestFullFace.detection.box)
+        }
       }
     }
 
@@ -190,6 +228,27 @@ const stopLogging = () => {
   console.log('Average sad: '+averageArrayValue(faceData.sad));
   console.log('Average surprised: '+averageArrayValue(faceData.surprised));
   console.log('Average age: '+averageArrayValue(faceData.age));
+  if (averageArrayValue(faceData.happy)) {
+    document.getElementById('quizContainer').innerHTML += "<p>You smiled "+(averageArrayValue(faceData.happy)*100).toFixed(2)+"% of the time</p>";
+  }
+  if (extractedFace) {
+    document.getElementById('quizContainer').appendChild(extractedFace);
+  }
+
+  document.getElementById('quizContainer').innerHTML += "<h1>User Report</h1><p>User Number: "+(Math.random()*10000).toFixed(0)+"</p>"
+  document.getElementById('quizContainer').innerHTML += "<p>Feedback notes: "+getFeedbackNotes(averageArrayValue(faceData.neutral), 'neutral')+"</p>";
+
+}
+
+const getFeedbackNotes = (faceDataAverage, expression) => {
+  let kindessOptions = ['kind', 'neutral', 'rude']
+  let randomKindness = kindessOptions[Math.floor(Math.random()*3)];
+
+  console.log(randomKindness);
+
+  if (faceDataAverage > 0.5) {
+    return responses[randomKindness][expression]
+  }
 }
 
 const averageArrayValue = (array) => {
@@ -209,6 +268,8 @@ const startExperience = () => {
   started = true;
   document.getElementById('startScreen').remove();
   document.getElementById('video').play();
+
+  faceCapture = true;
 
   document.getElementById('video').onended = () => {
     document.getElementById('videoHolder').remove();
@@ -290,6 +351,11 @@ const checkAnswer = () => {
       console.log('Done')
       document.getElementById('quizContainer').innerHTML = "<h1>Complete!</h1>";
       document.getElementById('quizContainer').innerHTML += "<p>Score: "+score+"/"+questions.length+"</p>";
+      if ((score/questions.length) > 0.5) {
+        document.getElementById('quizContainer').innerHTML += "<p>Well done!</p>";
+      } else {
+        document.getElementById('quizContainer').innerHTML += "<p>Could be better :(</p>";
+      }
       stopLogging();
       return
     }
