@@ -75,7 +75,7 @@ function startup() {
 async function extractFaceFromBox(imageRef, box) {
   let imageEl = null;
   const regionsToExtract = [
-    new faceapi.Rect(box.x, box.y*0.5, box.width*2, box.height*2)
+    new faceapi.Rect(box.x-(box.width/2), box.y-(box.height/2), box.width*2, box.height*2)
   ];
   let faceImages = await faceapi.extractFaces(imageRef, regionsToExtract);
 
@@ -90,8 +90,8 @@ async function extractFaceFromBox(imageRef, box) {
     // setPic(faceImages.toDataUrl);
     // console.log("face found ");
     // console.log(outputImage);
-    imageEl = document.createElement('img')
-    imageEl.src = outputImage;
+    // imageEl = document.createElement('img')
+    imageEl = outputImage;
     // document.getElementById('facesOutput').appendChild(imageEl);
     // document.getElementById('outputCropped').src = outputImage;
   }
@@ -228,16 +228,24 @@ const stopLogging = () => {
   console.log('Average sad: '+averageArrayValue(faceData.sad));
   console.log('Average surprised: '+averageArrayValue(faceData.surprised));
   console.log('Average age: '+averageArrayValue(faceData.age));
-  if (averageArrayValue(faceData.happy)) {
-    document.getElementById('quizContainer').innerHTML += "<p>You smiled "+(averageArrayValue(faceData.happy)*100).toFixed(2)+"% of the time</p>";
-  }
-  if (extractedFace) {
-    document.getElementById('quizContainer').appendChild(extractedFace);
-  }
+  // if (averageArrayValue(faceData.happy)) {
+  //   document.getElementById('quizContainer').innerHTML += "<p>You smiled "+(averageArrayValue(faceData.happy)*100).toFixed(2)+"% of the time</p>";
+  // }
+  // if (extractedFace) {
+  //   document.getElementById('quizContainer').appendChild(extractedFace);
+  // }
 
-  document.getElementById('quizContainer').innerHTML += "<h1>User Report</h1><p>User Number: "+(Math.random()*10000).toFixed(0)+"</p>"
-  document.getElementById('quizContainer').innerHTML += "<p>Feedback notes: "+getFeedbackNotes(averageArrayValue(faceData.neutral), 'neutral')+"</p>";
+  // document.getElementById('quizContainer').innerHTML += "<h1>User Report</h1><p>User Number: "+(Math.random()*10000).toFixed(0)+"</p>"
 
+  // const feedbackPoints = ['angry','disgusted','fearful','happy','neutral','sad','surprised','age']
+  // var feedbackText = '';
+  // for (var i=0; i<feedbackPoints.length; i++) {
+  //   feedbackText += getFeedbackNotes(averageArrayValue(faceData[feedbackPoints[i]]), feedbackPoints[i]) + " ";
+  // }
+  
+  // document.getElementById('quizContainer').innerHTML += "<p>Feedback notes: "+feedbackText+"</p>";
+
+  showResults();
 }
 
 const getFeedbackNotes = (faceDataAverage, expression) => {
@@ -248,6 +256,8 @@ const getFeedbackNotes = (faceDataAverage, expression) => {
 
   if (faceDataAverage > 0.5) {
     return responses[randomKindness][expression]
+  } else {
+    return "";
   }
 }
 
@@ -383,3 +393,56 @@ const loadQuiz = () => {
 }
 
 loadQuiz();
+
+String.prototype.replaceAll = function(search, replacement) {
+  var target = this;
+  return target.replace(new RegExp(search, 'gi'), replacement);
+};
+
+const showResults = () => {
+  var newID = (Math.random()*100000000).toFixed(0);
+  var newName = names.first[Math.floor(Math.random()*names.first.length)] + ' ' + names.last[Math.floor(Math.random()*names.last.length)];
+  var newAge = averageArrayValue(faceData.age).toFixed(0);
+  var quizScore = ((score / questions.length) * 100).toFixed(2) + '%';
+  var correctedScore = (((score / questions.length) * averageArrayValue(faceData.happy)) * 100).toFixed(2) + '%';
+
+
+  if (extractedFace) {
+    document.getElementById('imgData').src = extractedFace;
+  }
+
+  document.getElementById('idData').innerHTML = newID;
+  document.getElementById('nameData').innerHTML = newName;
+  document.getElementById('ageData').innerHTML = newAge;
+  document.getElementById('quizData').innerHTML = quizScore;
+  document.getElementById('correctedData').innerHTML = correctedScore;
+
+
+  const feedbackPoints = ['angry','disgusted','fearful','happy','neutral','sad','surprised','age']
+  var feedbackText = '';
+  var numberOfPoints = Math.ceil(Math.random()*feedbackPoints.length);
+  for (var i=0; i<numberOfPoints; i++) {
+    if (averageArrayValue(faceData[feedbackPoints[i]]) <= 0.3) {
+      //low
+      feedbackText += responses.low[feedbackPoints[i]].replaceAll('the subject', (newName.split(' ')[1])) + '<br>'
+      //
+    } else if (averageArrayValue(faceData[feedbackPoints[i]]) <= 0.6) {
+      //average
+      feedbackText += responses.average[feedbackPoints[i]].replaceAll('the subject', (newName.split(' ')[1])) + '<br>'
+      //
+    } else if (averageArrayValue(faceData[feedbackPoints[i]]) > 0.6) {
+      // high
+      feedbackText += responses.high[feedbackPoints[i]].replaceAll('the subject', (newName.split(' ')[1])) + '<br>'
+      //
+    }
+  }
+
+  document.getElementById('feedbackText').innerHTML = feedbackText;
+ 
+  document.getElementById('profileDisplay').style.display = 'flex';
+
+}
+
+
+
+// showResults();

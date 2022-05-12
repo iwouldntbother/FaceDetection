@@ -18,16 +18,16 @@
     </div>
 
     <div id='videoHolder'>
-      <video id='video' src='video/Trimmed.mp4'></video>
+      <video id='video' src='video/GA_U7_BBC.mp4'></video>
     </div>
 
     <div id='quizContainer'>
       <p id='quizTitle' class='quizTitle'>Test question?<br><span>(Answer is 3)</span></p>
-      <button id='answer0' class='quizOption'>0. Test</button>
-      <button id='answer1' class='quizOption'>1. Test</button>
-      <button id='answer2' class='quizOption'>2. Test</button>
-      <button id='answer3' class='quizOption'>3. Test</button>
-      <button id='nextBTN'>Check</button>
+      <button id='answer0' class='button-5'>0. Test</button>
+      <button id='answer1' class='button-5'>1. Test</button>
+      <button id='answer2' class='button-5'>2. Test</button>
+      <button id='answer3' class='button-5'>3. Test</button>
+      <button id='nextBTN' class='button-13'>Check</button>
     </div>
 
     <div id="videoContainer" style='display: none;'>
@@ -37,10 +37,32 @@
 
   </div>
 
+  <div id='profileDisplay'>
+    <h1>Results</h1>
+    <div id='profileAndData'>
+      <img id='imgData'>
+      <div id='dataList'>
+        <p>ID: <span id='idData'>20024507</span></p>
+        <p>Name: <span id='nameData'>20024507</span></p>
+        <p>Age: <span id='ageData'>20024507</span></p>
+        <p>Quiz Score: <span id='quizData'>20024507</span></p>
+        <p>Corrected Score: <span id='correctedData'>20024507</span></p>
+        <p id='comment'>*the corrected score is made by taking your true score and multiplying it by the amount you smiled during the quiz.</p>
+      </div>
+    </div>
+    <div id='feedbackBox'>
+      <h1>Feedback notes</h1>
+      <p id='feedbackText'></p>
+    </div>
+
+    <h1 class='disclaimer'>Refresh the page to start again.</h1>
+  </div>
+
   <script src="/js/jquery-3.4.1.min.js"></script>
   <script src='/js/face-api.js'></script>
   <script src='js/quizQuestions.js'></script>
   <script src='js/responses.js'></script>
+  <script src='js/names.js'></script>
   <script src='js/quiz.js'></script>
 
 </body>

@@ -13,6 +13,8 @@ body {
   background-color: #ecf0f1;
 }
 
+/* Quiz */
+
 #quizContainer {
   display: flex;
   flex-direction: column;
@@ -23,10 +25,6 @@ body {
 .quizTitle {
   width: 25vw;
   text-align: center;
-}
-
-.quizOption {
-  width: 25vw;
 }
 
 #nextBTN {
@@ -44,6 +42,92 @@ body {
 
 .wrong {
   background-color: #e74c3c !important;
+}
+
+/* CSS */
+.button-5 {
+  align-items: center;
+  background-clip: padding-box;
+  background-color: gray;
+  border: 1px solid transparent;
+  border-radius: .25rem;
+  box-shadow: rgba(0, 0, 0, 0.02) 0 1px 3px 0;
+  box-sizing: border-box;
+  color: #fff;
+  cursor: pointer;
+  display: inline-flex;
+  font-family: system-ui,-apple-system,system-ui,"Helvetica Neue",Helvetica,Arial,sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  justify-content: center;
+  line-height: 1.25;
+  margin: 0;
+  min-height: 3rem;
+  padding: calc(.875rem - 1px) calc(1.5rem - 1px);
+  position: relative;
+  text-decoration: none;
+  transition: all 250ms;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  vertical-align: baseline;
+  width: 25vw;
+}
+
+.button-5:hover,
+.button-5:focus {
+  background-color: #fb8332;
+  box-shadow: rgba(0, 0, 0, 0.1) 0 4px 12px;
+}
+
+.button-5:hover {
+  transform: translateY(-1px);
+}
+
+.button-5:active {
+  background-color: #c85000;
+  box-shadow: rgba(0, 0, 0, .06) 0 2px 4px;
+  transform: translateY(0);
+}
+
+/* CSS */
+.button-13 {
+  background-color: rgb(135, 224, 130);
+  border: 1px solid #d5d9d9;
+  border-radius: 8px;
+  box-shadow: rgba(213, 217, 217, .5) 0 2px 5px 0;
+  box-sizing: border-box;
+  color: #0f1111;
+  cursor: pointer;
+  display: inline-block;
+  font-family: "Amazon Ember",sans-serif;
+  font-size: 13px;
+  line-height: 29px;
+  padding: 0 10px 0 11px;
+  position: relative;
+  text-align: center;
+  text-decoration: none;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  vertical-align: middle;
+  width: 100px;
+  transition: all 500ms ease-in-out;
+}
+
+.button-13:hover:enabled {
+  background-color: rgb(111, 197, 107);
+}
+
+.button-13:focus {
+  /* border-color: #008296; */
+  box-shadow: rgba(213, 217, 217, .5) 0 2px 5px 0;
+  outline: 0;
+}
+
+.button-13:disabled {
+  background-color: #f7fafa;;
+  cursor: not-allowed;
 }
 
 /* Face Detection */
@@ -82,6 +166,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
+  z-index: 5;
 }
 
 #video {
@@ -102,4 +187,49 @@ body {
   z-index: 10;
   background: black;
   color: white;
+}
+
+/* End Screen */
+
+#profileDisplay {
+  display: none;
+  flex-direction: column;
+  width: 100vw;
+  height: 100vh;
+  background-color: black;
+  color: white;
+  position: fixed;
+  top: 0;
+  z-index: 200;
+  padding-left: 1vw;
+}
+
+#imgData {
+  width: 20vw;
+  height: auto;
+}
+
+#profileAndData {
+  display: flex;
+  flex-direction: row;
+}
+
+#dataList {
+  margin-left: 1vw;
+}
+
+#dataList p {
+  font-size: 1.5vw;
+}
+
+#comment {
+  font-size: 0.75vw !important;
+  max-width: 20vw;
+  margin-top: -1vh;
+}
+
+.disclaimer {
+  font-size: 2vw;
+  position: absolute;
+  bottom: 0;
 }
